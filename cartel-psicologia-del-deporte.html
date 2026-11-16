@@ -1,0 +1,579 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Psicología del deporte · Universidad Surcolombiana</title>
+  <style>
+    @page {
+      size: A3 portrait;
+      margin: 0;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --red: #8d181d;
+      --red-hot: #e1262d;
+      --ink: #f4f0e6;
+      --muted: #c4beb4;
+      --line: rgba(255, 255, 255, 0.1);
+      --display: Bahnschrift, "Arial Narrow", "Segoe UI", sans-serif;
+      --text: "Segoe UI", Calibri, sans-serif;
+    }
+
+    html, body {
+      background: #141414;
+      color: var(--ink);
+      font-family: var(--text);
+    }
+
+    .toolbar {
+      width: min(920px, 94vw);
+      margin: 18px auto 12px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+      color: #d9d3c8;
+      font-size: 13px;
+      letter-spacing: 0.04em;
+    }
+
+    .toolbar button {
+      background: var(--red);
+      color: white;
+      border: 0;
+      padding: 10px 16px;
+      font-family: var(--display);
+      font-stretch: condensed;
+      font-size: 14px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      cursor: pointer;
+    }
+
+    .toolbar button:hover { background: #a31d24; }
+
+    .slot {
+      position: relative;
+      margin: 0 auto 28px;
+    }
+
+    .poster {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 297mm;
+      height: 420mm;
+      padding: 8.5mm 9mm 6.5mm;
+      background: #000;
+      color: var(--ink);
+      overflow: hidden;
+      display: grid;
+      grid-template-rows: auto auto minmax(108mm, 1fr) auto auto auto;
+      gap: 3.2mm;
+      transform-origin: top left;
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+
+    .poster::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 2.4mm;
+      background: var(--red);
+    }
+
+    .poster::after {
+      content: "";
+      position: absolute;
+      inset: 3.6mm;
+      border: 0.25mm solid rgba(255, 255, 255, 0.16);
+      pointer-events: none;
+      z-index: 4;
+    }
+
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 6mm;
+      position: relative;
+      z-index: 2;
+    }
+
+    .logo {
+      height: 22mm;
+      width: auto;
+      display: block;
+    }
+
+    .meta {
+      text-align: right;
+    }
+
+    .meta p:first-child {
+      font-family: var(--display);
+      font-stretch: condensed;
+      font-size: 3.6mm;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--red-hot);
+    }
+
+    .meta p:last-child {
+      margin-top: 1mm;
+      font-size: 3.5mm;
+      letter-spacing: 0.02em;
+      color: var(--muted);
+    }
+
+    .hero { position: relative; z-index: 2; }
+
+    .kicker {
+      font-family: var(--display);
+      font-stretch: condensed;
+      font-size: 3.5mm;
+      letter-spacing: 0.38em;
+      text-transform: uppercase;
+      color: var(--red-hot);
+      margin-bottom: 1.4mm;
+    }
+
+    h1 {
+      font-family: var(--display);
+      font-stretch: condensed;
+      font-weight: 600;
+      font-size: 44mm;
+      line-height: 0.78;
+      letter-spacing: -0.03em;
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+
+    h1 span {
+      display: block;
+      color: var(--red-hot);
+    }
+
+    .mosaic {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1.46fr;
+      grid-template-rows: 1fr 1fr;
+      gap: 1.8mm;
+      min-height: 0;
+      position: relative;
+      z-index: 2;
+    }
+
+    .shot {
+      position: relative;
+      overflow: hidden;
+      background: #111;
+    }
+
+    .shot.messi,
+    .shot.cristiano { grid-row: 1 / span 2; }
+
+    .shot.jordan { grid-column: 3; grid-row: 1; }
+    .shot.khabib { grid-column: 3; grid-row: 2; }
+
+    .shot picture {
+      position: absolute;
+      inset: 0;
+      display: block;
+    }
+
+    .shot img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .shot.messi img {
+      object-position: center 22%;
+      transform: scale(1.12);
+      transform-origin: 42% 38%;
+    }
+    .shot.cristiano img { object-position: center 42%; }
+    .shot.jordan img { object-position: 55% 46%; }
+    .shot.khabib img { object-position: center 40%; }
+
+    .shot figcaption {
+      position: absolute;
+      top: 2.2mm;
+      left: 2.2mm;
+      z-index: 2;
+      background: rgba(0, 0, 0, 0.62);
+      border-left: 0.9mm solid var(--red-hot);
+      padding: 1.3mm 2.3mm 1.2mm 2mm;
+    }
+
+    .shot figcaption b {
+      display: block;
+      font-family: var(--display);
+      font-stretch: condensed;
+      font-weight: 600;
+      font-size: 4mm;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      line-height: 1;
+    }
+
+    .shot figcaption span {
+      display: block;
+      margin-top: 0.7mm;
+      font-size: 2.45mm;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: #f0d2d2;
+    }
+
+    .mantra {
+      position: relative;
+      z-index: 2;
+      background: var(--red);
+      color: white;
+      text-align: center;
+      font-family: var(--display);
+      font-stretch: condensed;
+      font-size: 4.2mm;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      padding: 2.3mm 4mm;
+      white-space: nowrap;
+    }
+
+    .topics {
+      min-height: 0;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      grid-template-rows: auto auto;
+      gap: 3.2mm;
+      position: relative;
+      z-index: 2;
+    }
+
+    .card {
+      min-height: 0;
+      background: #0c0c0c;
+      border: 0.28mm solid var(--line);
+      border-top: 1.15mm solid var(--red);
+      padding: 3.6mm 4.6mm 3.6mm;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    .num {
+      font-family: var(--display);
+      font-stretch: condensed;
+      color: var(--red-hot);
+      font-size: 3.5mm;
+      letter-spacing: 0.22em;
+    }
+
+    h2 {
+      font-family: var(--display);
+      font-stretch: condensed;
+      font-weight: 600;
+      font-size: 6.3mm;
+      line-height: 0.92;
+      letter-spacing: 0.015em;
+      text-transform: uppercase;
+      margin: 0.8mm 0 2.6mm;
+    }
+
+    .lead {
+      font-size: 4mm;
+      line-height: 1.32;
+      color: #f7f3ea;
+    }
+
+    .keys {
+      margin-top: 3mm;
+      font-family: var(--display);
+      font-stretch: condensed;
+      font-size: 3.15mm;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--red-hot);
+    }
+
+    .time {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 2.3mm;
+    }
+
+    .time li {
+      display: grid;
+      grid-template-columns: 14mm 1fr;
+      column-gap: 2.6mm;
+      align-items: start;
+    }
+
+    .time strong {
+      font-family: var(--display);
+      font-stretch: condensed;
+      font-weight: 600;
+      font-size: 4.5mm;
+      line-height: 1.05;
+      color: var(--red-hot);
+    }
+
+    .time span {
+      font-size: 3.25mm;
+      line-height: 1.25;
+      color: #e6e0d6;
+    }
+
+    .note {
+      margin-top: 2.6mm;
+      font-size: 3.05mm;
+      line-height: 1.25;
+      color: var(--muted);
+    }
+
+    .funcs {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 2.15mm;
+    }
+
+    .funcs li {
+      position: relative;
+      padding-left: 4.2mm;
+      font-size: 3.45mm;
+      line-height: 1.25;
+      color: #f3efe6;
+    }
+
+    .funcs li::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 1.15mm;
+      width: 1.7mm;
+      height: 1.7mm;
+      background: var(--red-hot);
+    }
+
+    .chips {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.8mm;
+    }
+
+    .chips span {
+      border: 0.35mm solid rgba(225, 38, 45, 0.85);
+      color: var(--ink);
+      padding: 1.7mm 2.2mm;
+      font-size: 3.25mm;
+      letter-spacing: 0.02em;
+      line-height: 1.15;
+      text-align: center;
+    }
+
+    footer {
+      position: relative;
+      z-index: 2;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 4mm;
+      border-top: 0.25mm solid rgba(255, 255, 255, 0.16);
+      padding-top: 2.2mm;
+      font-family: var(--display);
+      font-stretch: condensed;
+      font-size: 3.1mm;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: #d9d3c8;
+    }
+
+    footer b {
+      color: white;
+      font-weight: 600;
+    }
+
+    @media print {
+      html, body {
+        width: 297mm;
+        height: 420mm;
+        margin: 0;
+        background: #000;
+      }
+
+      .toolbar { display: none !important; }
+
+      .slot {
+        width: 297mm !important;
+        height: 420mm !important;
+        margin: 0;
+      }
+
+      .poster {
+        transform: none !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="toolbar">
+    <p>Cartel A3 · listo para imprimir o guardar en PDF</p>
+    <button type="button" onclick="window.print()">Imprimir cartel</button>
+  </div>
+
+  <div class="slot" id="slot">
+    <article class="poster" id="poster" aria-label="Cartel de psicología del deporte">
+      <header>
+        <img class="logo" src="assets/images/logousco.png" alt="Logo de la Universidad Surcolombiana">
+        <div class="meta">
+          <p>Programa de Psicología</p>
+          <p>Filosofía e Historia de la Psicología</p>
+        </div>
+      </header>
+
+      <div class="hero">
+        <p class="kicker">Mente · emoción · rendimiento</p>
+        <h1>Psicología<br><span>del deporte</span></h1>
+      </div>
+
+      <div class="mosaic">
+        <figure class="shot messi">
+          <img src="assets/images/messi.jpg" alt="Lionel Messi controla el balón con la mirada fija en el juego">
+          <figcaption>
+            <b>Foco</b>
+            <span>Messi · Fútbol</span>
+          </figcaption>
+        </figure>
+        <figure class="shot cristiano">
+          <img src="assets/images/cristiano.jfif" alt="Cristiano Ronaldo en una sesión de entrenamiento">
+          <figcaption>
+            <b>Disciplina</b>
+            <span>Cristiano · Fútbol</span>
+          </figcaption>
+        </figure>
+        <figure class="shot jordan">
+          <picture>
+            <source srcset="assets/images/jordan.avif" type="image/avif">
+            <img src="assets/images/jordan.jpg" alt="Michael Jordan abraza el trofeo de la NBA, emocionado">
+          </picture>
+          <figcaption>
+            <b>Emoción</b>
+            <span>Jordan · Baloncesto</span>
+          </figcaption>
+        </figure>
+        <figure class="shot khabib">
+          <img src="assets/images/khabib.jpg" alt="Khabib Nurmagomedov controla a su rival dentro del octágono">
+          <figcaption>
+            <b>Control</b>
+            <span>Khabib · MMA</span>
+          </figcaption>
+        </figure>
+      </div>
+
+      <p class="mantra">El cuerpo ejecuta · La mente decide</p>
+
+      <section class="topics">
+        <article class="card">
+          <p class="num">01</p>
+          <h2>Qué es</h2>
+          <p class="lead">Estudia cómo la atención, la emoción y la motivación cambian el rendimiento de quien compite o se ejercita. Busca dos cosas a la vez: rendir mejor y cuidar la salud mental.</p>
+          <p class="keys">Atención · Emoción · Motivación · Confianza</p>
+        </article>
+
+        <article class="card">
+          <p class="num">02</p>
+          <h2>Orígenes</h2>
+          <ol class="time">
+            <li>
+              <strong>1898</strong>
+              <span>Norman Triplett muestra que la presencia de otros altera el rendimiento.</span>
+            </li>
+            <li>
+              <strong>1925</strong>
+              <span>Coleman Griffith funda el primer laboratorio, en la Universidad de Illinois.</span>
+            </li>
+            <li>
+              <strong>1965</strong>
+              <span>Nace la Sociedad Internacional de Psicología del Deporte.</span>
+            </li>
+          </ol>
+          <p class="note">En Colombia crece con clubes, selecciones y la formación universitaria.</p>
+        </article>
+
+        <article class="card">
+          <p class="num">03</p>
+          <h2>Funciones del psicólogo deportivo</h2>
+          <ul class="funcs">
+            <li>Evaluar concentración, ansiedad y motivación.</li>
+            <li>Entrenar respiración, visualización, diálogo interno y rutinas.</li>
+            <li>Acompañar lesiones, desgaste y el cierre de la carrera.</li>
+            <li>Asesorar al entrenador en clima, liderazgo y comunicación.</li>
+          </ul>
+        </article>
+
+        <article class="card">
+          <p class="num">04</p>
+          <h2>Campos de desempeño</h2>
+          <div class="chips">
+            <span>Alto rendimiento</span>
+            <span>Formación de base</span>
+            <span>Rehabilitación</span>
+            <span>Ejercicio y salud</span>
+            <span>Docencia e investigación</span>
+            <span>Deporte adaptado</span>
+          </div>
+        </article>
+      </section>
+
+      <footer>
+        <span>Universidad Surcolombiana</span>
+        <b>Entrenar la mente también es entrenar</b>
+      </footer>
+    </article>
+  </div>
+
+  <script>
+    const poster = document.getElementById("poster");
+    const slot = document.getElementById("slot");
+    const exporting = new URLSearchParams(location.search).has("export");
+
+    function fit() {
+      if (exporting) {
+        document.body.classList.add("export");
+        poster.style.transform = "none";
+        slot.style.width = poster.offsetWidth + "px";
+        slot.style.height = poster.offsetHeight + "px";
+        return;
+      }
+      const scale = Math.min(
+        (window.innerWidth - 32) / poster.offsetWidth,
+        (window.innerHeight - 78) / poster.offsetHeight
+      );
+      poster.style.transform = "scale(" + scale + ")";
+      slot.style.width = poster.offsetWidth * scale + "px";
+      slot.style.height = poster.offsetHeight * scale + "px";
+    }
+
+    window.addEventListener("resize", fit);
+    fit();
+  </script>
+  <style>
+    body.export { margin: 0; background: #000; }
+    body.export .toolbar { display: none; }
+    body.export .slot { margin: 0; }
+  </style>
+</body>
+</html>
