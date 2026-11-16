@@ -406,6 +406,41 @@ button, a { font: inherit; }
   grid-template-columns: repeat(auto-fit, minmax(min(100%, 220px), 1fr));
 }
 
+.team {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 150px), 1fr));
+  gap: 0.85rem;
+  margin-top: 1.4rem;
+}
+
+.member {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-top: 4px solid var(--red);
+  padding: 0.75rem 0.7rem 0.95rem;
+  text-align: center;
+}
+
+.member img {
+  width: 100%;
+  aspect-ratio: 1;
+  object-fit: cover;
+  object-position: center 18%;
+  display: block;
+  background: #161616;
+}
+
+.member h3 {
+  margin: 0.7rem 0 0;
+  font-family: var(--display);
+  font-stretch: condensed;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  line-height: 1.05;
+  font-size: clamp(0.92rem, 1.5vw, 1.12rem);
+}
+
 .year {
   margin: 0 0 0.35rem;
   font-size: 1.15rem;
